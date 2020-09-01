@@ -1,0 +1,46 @@
+---
+title: "Task Scheduler Info"
+author: "Randall Madsen"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = TRUE,
+	message = FALSE,
+	warning = FALSE
+)
+```
+
+
+```{r message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
+
+#Load packages
+
+if(!require(pacman)) install.packages("pacman")
+pacman::p_load(tidyverse, lubridate, readxl, janitor, plotly, reactable, DT, scales, taskscheduleR)
+
+#Set theme for better viz
+theme_set(theme_light())
+```
+
+
+```{r}
+# Create a list of the scheduled tasks that are listed in your library
+
+current_tasks <- 
+  taskscheduleR::taskscheduler_ls()
+
+# View the object
+View(current_tasks)
+
+
+# If there is a task that needs to be deleted, just use the following function
+taskscheduleR::taskscheduler_delete(taskname = "ExampleTaskName")
+
+# You can then view the current task list again to ensure that it was deleted
+View(current_tasks)
+
+```
+
